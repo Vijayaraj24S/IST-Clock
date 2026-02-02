@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
+
+
+    <style>
+        #date,
+        #time {
+            max-width: 92vw;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+            background: radial-gradient(circle at top, #0f172a, #020617);
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        h2 {
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Containers */
+        #date,
+        #time {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 28px;
+            padding: 22px 36px;
+            border-radius: 22px;
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.12),
+                    rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        /* Blocks */
+        #dd,
+        #mm,
+        #yyyy,
+        #hh,
+        #mi,
+        #s,
+        #ms {
+            min-width: 64px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #e5f2ff;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            text-shadow:
+                0 0 8px rgba(56, 189, 248, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        /* Year & ms highlight */
+        #yyyy,
+        #ms {
+            min-width: 96px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #7dd3fc;
+        }
+
+        /* Hover polish */
+        #dd:hover,
+        #mm:hover,
+        #yyyy:hover,
+        #hh:hover,
+        #mi:hover,
+        #s:hover,
+        #ms:hover {
+            transform: translateY(-4px) scale(1.04);
+            box-shadow: 0 0 35px rgba(56, 189, 248, 0.55);
+        }
+
+        /* ---------- Tablets (≤ 900px) ---------- */
+        @media (max-width: 900px) {
+            body {
+                gap: 24px;
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 1.1rem;
+                letter-spacing: 3px;
+            }
+
+            #date,
+            #time {
+                gap: 20px;
+                padding: 18px 26px;
+                border-radius: 20px;
+            }
+
+            #dd,
+            #mm,
+            #yyyy,
+            #hh,
+            #mi,
+            #s,
+            #ms {
+                min-width: 56px;
+                padding: 10px 14px;
+                font-size: 1.35rem;
+            }
+
+            #yyyy,
+            #ms {
+                min-width: 82px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* ---------- Mobiles (≤ 600px) ---------- */
+        @media (max-width: 600px) {
+            body {
+                gap: 14px;
+                padding: 16px;
+                /* ← key for edge spacing */
+            }
+
+            h2 {
+                font-size: 0.95rem;
+                letter-spacing: 2px;
+                text-align: center;
+            }
+
+            #date,
+            #time {
+                gap: 8px;
+                padding: 12px;
+                border-radius: 14px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            #dd,
+            #mm,
+            #yyyy,
+            #hh,
+            #mi,
+            #s,
+            #ms {
+                min-width: 48px;
+                padding: 8px 10px;
+                font-size: 1rem;
+            }
+
+            #yyyy,
+            #ms {
+                min-width: 72px;
+                font-size: 0.95rem;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+    <h2>clock</h2>
+    <div id="date"></div>
+    <div id="time"></div>
+    <script>
+
+
+        update();
+        setInterval(update, 1);
+
+
+        function update() {
+            let date = new Date();
+
+
+            // DATE FORMATIING
+            let fullDateLabel = document.getElementById("date");
+
+
+            let dd = formatDate(date);
+            let mm = formatMonth(date);
+            let yyyy = formatYear(date);
+
+
+            fullDateLabel.innerHTML = `<div id="dd">${dd}</div>`;
+            fullDateLabel.innerHTML += `<div id="mm">${mm}</div>`;
+            fullDateLabel.innerHTML += `<div id="yyyy">${yyyy}</div>`;
+
+
+
+
+            function formatDate(date) {
+                let fdate = date.getDate();
+                fdate = formatZeros(fdate)
+                return `${fdate}`;
+            }
+
+
+            function formatMonth(date) {
+                let month = date.getMonth() + 1;
+                month = formatZeros(month)
+                return `${month}`;
+            }
+
+
+            function formatYear(date) {
+                let year = date.getFullYear();
+                year = formatZeros(year)
+                return `${year}`;
+            }
+
+
+            // TIME FORMATTING
+            let fullTimeLabel = document.getElementById("time");
+
+
+            let hh = formatHours(date);
+            let mi = formatMins(date);
+            let s = formatSecs(date);
+            let ms = formatMillisecs(date)
+
+
+            fullTimeLabel.innerHTML = `<div id="hh">${hh}</div>`;
+            fullTimeLabel.innerHTML += `<div id="mi">${mi}</div>`;
+            fullTimeLabel.innerHTML += `<div id="s">${s}</div>`;
+            fullTimeLabel.innerHTML += `<div id="ms">${ms}</div>`;
+
+
+            function formatHours(date) {
+                let hours = date.getHours();
+                hours = hours % 12 || 12;
+                hours = formatZeros(hours);
+                return `${hours}`;
+            }
+            function formatMins(date) {
+                let minutes = date.getMinutes();
+                minutes = formatZeros(minutes);
+                return `${minutes}`;
+            }
+
+
+            function formatSecs(date) {
+                let seconds = date.getSeconds();
+                seconds = formatZeros(seconds);
+                return `${seconds}`;
+            }
+            function formatMillisecs(date) {
+                let millisecs = date.getMilliseconds();
+                millisecs = formatZerosForMilliSec(millisecs);
+                return `${millisecs}`;
+            }
+
+
+            function formatZeros(value) {
+                value = value.toString();
+                return (value.length < 2) ? "0" + value : value;
+            }
+
+
+            function formatZerosForMilliSec(value) {
+                value = value.toString();
+                return (value.length < 3) ? "0" + value : value;
+            }
+        }      
+    </script>
+</body>
+
+
+</html>
