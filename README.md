@@ -1,6 +1,6 @@
 # ⏱️ Glassmorphism Digital Clock
 
-A modern **Indian Standard Time digital clock** built using **HTML, CSS, and JavaScript**.  
+A modern **Glassmorphism-style digital clock** built using **HTML, CSS, and JavaScript**.  
 It displays **date and time with milliseconds**, featuring smooth UI, blur effects, and a premium futuristic look.
 
 ---
